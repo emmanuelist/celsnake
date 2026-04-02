@@ -70,21 +70,21 @@ contract MultiplayerSnakesGame {
     event PlayerFinished(uint256 indexed roomId, address indexed player, uint256 score);
     event GameFinished(uint256 indexed roomId, address[] winners, uint256[] prizes);
     event RoomCancelled(uint256 indexed roomId);
-
+    
     modifier onlyOwner() {
         require(msg.sender == owner, "Only owner");
         _;
     }
-
+    
     modifier roomExists(uint256 roomId) {
         require(roomId > 0 && roomId < nextRoomId, "Room does not exist");
         _;
     }
-
+    
     constructor() {
         owner = msg.sender;
     }
-
+    
     /**
      * @dev Create a new multiplayer room
      */
@@ -97,7 +97,7 @@ contract MultiplayerSnakesGame {
         require(_betAmount > 0, "Bet amount must be > 0");
         require(_maxPlayers >= 2 && _maxPlayers <= MAX_PLAYERS_PER_ROOM, "Invalid max players");
         require(msg.value == _betAmount, "Incorrect bet amount");
-
+        
         uint256 roomId = nextRoomId++;
         Room storage room = rooms[roomId];
         room.id = roomId;
@@ -109,17 +109,17 @@ contract MultiplayerSnakesGame {
         room.status = RoomStatus.Waiting;
         room.createdAt = block.timestamp;
         room.prizePool = msg.value;
-
+        
         // Add host as first player
         room.players.push(msg.sender);
         room.joined[msg.sender] = true;
-
+        
         activeRoomIds.push(roomId);
         
         emit RoomCreated(roomId, msg.sender, _difficulty, _betAmount);
         return roomId;
     }
-
+    
     /**
      * @dev Join an existing room
      */
@@ -129,19 +129,19 @@ contract MultiplayerSnakesGame {
         require(!room.joined[msg.sender], "Already joined");
         require(room.players.length < room.maxPlayers, "Room full");
         require(msg.value == room.betAmount, "Incorrect bet amount");
-
+        
         room.players.push(msg.sender);
         room.joined[msg.sender] = true;
         room.prizePool += msg.value;
-
+        
         emit PlayerJoined(roomId, msg.sender);
-
+        
         // Auto-start if room is full
         if (room.players.length == room.maxPlayers) {
             _startGame(roomId);
         }
     }
-
+    
     /**
      * @dev Leave a room before game starts
      */
@@ -149,12 +149,12 @@ contract MultiplayerSnakesGame {
         Room storage room = rooms[roomId];
         require(room.status == RoomStatus.Waiting, "Cannot leave after game started");
         require(room.joined[msg.sender], "Not in room");
-
+        
         // Refund bet
         uint256 betAmount = room.betAmount;
         room.prizePool -= betAmount;
         room.joined[msg.sender] = false;
-
+        
         // Remove from players array
         for (uint256 i = 0; i < room.players.length; i++) {
             if (room.players[i] == msg.sender) {
@@ -163,7 +163,7 @@ contract MultiplayerSnakesGame {
                 break;
             }
         }
-
+        
         payable(msg.sender).transfer(betAmount);
         emit PlayerLeft(roomId, msg.sender);
         
@@ -172,7 +172,7 @@ contract MultiplayerSnakesGame {
             _cancelRoom(roomId);
         }
     }
-
+    
     /**
      * @dev Start the game (internal, called when room is full)
      */
@@ -180,7 +180,7 @@ contract MultiplayerSnakesGame {
         Room storage room = rooms[roomId];
         room.status = RoomStatus.Playing;
         room.startedAt = block.timestamp;
-
+        
         // Generate deterministic board seed
         room.boardSeed = string(abi.encodePacked(
             block.timestamp,
@@ -188,13 +188,13 @@ contract MultiplayerSnakesGame {
             roomId,
             room.players.length
         ));
-
+        
         // Remove from active rooms when game starts
         _removeFromActiveRooms(roomId);
-
+        
         emit GameStarted(roomId, room.boardSeed);
     }
-
+    
     /**
      * @dev Mark player as eliminated (called by game server or trusted oracle)
      */
@@ -203,18 +203,16 @@ contract MultiplayerSnakesGame {
         require(room.status == RoomStatus.Playing, "Game not in progress");
         require(room.joined[player], "Player not in room");
         require(!room.eliminated[player], "Already eliminated");
-
-        room.finished[msg.sender] = true;
-        room.playerScores[msg.sender] = score;
-
-        playerStats[msg.sender].totalGames++;
-
-        emit PlayerFinished(roomId, msg.sender, score);
-
+        
+        // For MVP, allow any player to call this (will be oracle-only in production)
+        room.eliminated[player] = true;
+        
+        emit PlayerEliminated(roomId, player);
+        
         // Check if game should end
         _checkGameEnd(roomId);
     }
-
+    
     /**
      * @dev Mark player as finished with their score
      */
@@ -224,12 +222,14 @@ contract MultiplayerSnakesGame {
         require(room.joined[msg.sender], "Not in room");
         require(!room.eliminated[msg.sender], "Already eliminated");
         require(!room.finished[msg.sender], "Already finished");
-
+        
         room.finished[msg.sender] = true;
         room.playerScores[msg.sender] = score;
-
+        
         playerStats[msg.sender].totalGames++;
-
+        
+        emit PlayerFinished(roomId, msg.sender, score);
+        
         // Check if game should end
         _checkGameEnd(roomId);
     }
@@ -239,7 +239,7 @@ contract MultiplayerSnakesGame {
      */
     function _checkGameEnd(uint256 roomId) private {
         Room storage room = rooms[roomId];
-
+        
         // Game ends when all players are either finished or eliminated
         bool allDone = true;
         for (uint256 i = 0; i < room.players.length; i++) {
@@ -249,7 +249,7 @@ contract MultiplayerSnakesGame {
                 break;
             }
         }
-
+        
         if (allDone) {
             _distributePrizes(roomId);
         }
@@ -261,15 +261,15 @@ contract MultiplayerSnakesGame {
     function _distributePrizes(uint256 roomId) private {
         Room storage room = rooms[roomId];
         require(room.status == RoomStatus.Playing, "Game not playing");
-
+        
         room.status = RoomStatus.Finished;
-
+        
         uint256 houseFee = (room.prizePool * HOUSE_FEE_PERCENT) / 100;
         uint256 distributionPool = room.prizePool - houseFee;
-
+        
         address[] memory winners;
         uint256[] memory prizes;
-
+        
         if (room.prizeModel == PrizeModel.WinnerTakesAll) {
             (winners, prizes) = _distributeWinnerTakesAll(roomId, distributionPool);
         } else if (room.prizeModel == PrizeModel.Proportional) {
@@ -277,7 +277,7 @@ contract MultiplayerSnakesGame {
         } else if (room.prizeModel == PrizeModel.Survival) {
             (winners, prizes) = _distributeSurvival(roomId, distributionPool);
         }
-
+        
         // Transfer prizes
         for (uint256 i = 0; i < winners.length; i++) {
             if (prizes[i] > 0) {
@@ -286,9 +286,12 @@ contract MultiplayerSnakesGame {
                 payable(winners[i]).transfer(prizes[i]);
             }
         }
-
+        
         // Transfer house fee to owner
         payable(owner).transfer(houseFee);
-
+        
         // Remove from active rooms
         _removeFromActiveRooms(roomId);
+        
+        emit GameFinished(roomId, winners, prizes);
+    }
