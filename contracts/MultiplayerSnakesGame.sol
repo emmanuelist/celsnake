@@ -511,3 +511,10 @@ contract MultiplayerSnakesGame {
         nicknames[msg.sender] = nickname;
         playerStats[msg.sender].nickname = nickname;
     }
+
+    /**
+     * @dev Get contract balance
+     */
+    function getContractBalance() external view returns (uint256) {
+        return address(this).balance;
+    }
