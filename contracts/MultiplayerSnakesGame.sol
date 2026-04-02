@@ -420,3 +420,11 @@ contract MultiplayerSnakesGame {
      */
     function _cancelRoom(uint256 roomId) private {
         Room storage room = rooms[roomId];
+
+    // Refund all players
+        for (uint256 i = 0; i < room.players.length; i++) {
+            address player = room.players[i];
+            if (room.joined[player]) {
+                payable(player).transfer(room.betAmount);
+            }
+        }
