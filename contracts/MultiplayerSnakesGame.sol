@@ -227,3 +227,5 @@ contract MultiplayerSnakesGame {
 
         room.finished[msg.sender] = true;
         room.playerScores[msg.sender] = score;
+
+        playerStats[msg.sender].totalGames++;
