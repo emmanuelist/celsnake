@@ -366,3 +366,8 @@ contract MultiplayerSnakesGame {
         uint256 count = finishedCount > 3 ? 3 : finishedCount;
         winners = new address[](count);
         prizes = new uint256[](count);
+
+        uint256[] memory percentages = new uint256[](3);
+        percentages[0] = 60; // 1st: 60%
+        percentages[1] = 25; // 2nd: 25%
+        percentages[2] = 10; // 3rd: 10%
