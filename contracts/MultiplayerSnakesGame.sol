@@ -328,3 +328,11 @@ contract MultiplayerSnakesGame {
             prizes = new uint256[](0);
         }
     }
+
+    /**
+     * @dev Proportional distribution (Top 3)
+     */
+    function _distributeProportional(uint256 roomId, uint256 pool) 
+        private 
+        view 
+        returns (address[] memory winners, uint256[] memory prizes)
