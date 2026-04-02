@@ -23,3 +23,4 @@ pragma solidity ^0.8.20;
         Difficulty difficulty;
         uint256 betAmount;
         uint256 maxPlayers;
+        PrizeModel prizeModel;
