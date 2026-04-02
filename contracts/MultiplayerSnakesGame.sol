@@ -32,3 +32,4 @@ pragma solidity ^0.8.20;
         mapping(address => bool) finished;
         uint256 prizePool;
         uint256 createdAt;
+        uint256 startedAt;
