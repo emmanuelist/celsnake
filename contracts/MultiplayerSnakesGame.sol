@@ -263,3 +263,6 @@ contract MultiplayerSnakesGame {
         require(room.status == RoomStatus.Playing, "Game not playing");
 
         room.status = RoomStatus.Finished;
+
+        uint256 houseFee = (room.prizePool * HOUSE_FEE_PERCENT) / 100;
+        uint256 distributionPool = room.prizePool - houseFee;
