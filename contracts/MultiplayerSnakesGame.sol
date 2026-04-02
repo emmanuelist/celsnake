@@ -6,3 +6,9 @@ pragma solidity ^0.8.20;
  * @dev Multiplayer extension for Celo Snake game with turn-based mechanics
  * @notice Supports room-based gameplay with winner-takes-all or proportional distribution
  */
+
+ contract MultiplayerSnakesGame {
+    address public owner;
+    uint256 public constant HOUSE_FEE_PERCENT = 5; // 5% house fee
+    uint256 public constant MAX_PLAYERS_PER_ROOM = 4;
+    uint256 public constant TURN_TIMEOUT = 60 seconds;
