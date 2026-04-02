@@ -255,3 +255,9 @@ contract MultiplayerSnakesGame {
         }
     }
     
+    /**
+     * @dev Distribute prizes based on prize model
+     */
+    function _distributePrizes(uint256 roomId) private {
+        Room storage room = rooms[roomId];
+        require(room.status == RoomStatus.Playing, "Game not playing");
