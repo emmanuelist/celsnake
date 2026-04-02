@@ -133,3 +133,5 @@ contract MultiplayerSnakesGame {
         room.players.push(msg.sender);
         room.joined[msg.sender] = true;
         room.prizePool += msg.value;
+
+        emit PlayerJoined(roomId, msg.sender);
