@@ -64,4 +64,4 @@ pragma solidity ^0.8.20;
 
     // Events
     event RoomCreated(uint256 indexed roomId, address indexed host, Difficulty difficulty, uint256 betAmount);
-    
+    event PlayerJoined(uint256 indexed roomId, address indexed player);
