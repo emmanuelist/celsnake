@@ -361,3 +361,8 @@ contract MultiplayerSnakesGame {
                 }
             }
         }
+
+        // Distribute to top 3
+        uint256 count = finishedCount > 3 ? 3 : finishedCount;
+        winners = new address[](count);
+        prizes = new uint256[](count);
