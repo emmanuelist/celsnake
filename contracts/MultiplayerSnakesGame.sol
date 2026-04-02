@@ -305,3 +305,7 @@ contract MultiplayerSnakesGame {
         returns (address[] memory winners, uint256[] memory prizes)
     {
         Room storage room = rooms[roomId];
+
+        // Find highest scorer who finished
+        address winner;
+        uint256 highestScore = 0;
