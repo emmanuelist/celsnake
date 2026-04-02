@@ -214,3 +214,13 @@ contract MultiplayerSnakesGame {
         // Check if game should end
         _checkGameEnd(roomId);
     }
+
+    /**
+     * @dev Mark player as finished with their score
+     */
+    function finishPlayer(uint256 roomId, uint256 score) external roomExists(roomId) {
+        Room storage room = rooms[roomId];
+        require(room.status == RoomStatus.Playing, "Game not in progress");
+        require(room.joined[msg.sender], "Not in room");
+        require(!room.eliminated[msg.sender], "Already eliminated");
+        require(!room.finished[msg.sender], "Already finished");
