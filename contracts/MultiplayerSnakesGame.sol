@@ -295,21 +295,21 @@ contract MultiplayerSnakesGame {
         
         emit GameFinished(roomId, winners, prizes);
     }
-
+    
     /**
      * @dev Winner-takes-all distribution
      */
     function _distributeWinnerTakesAll(uint256 roomId, uint256 pool) 
         private 
         view 
-        returns (address[] memory winners, uint256[] memory prizes)
+        returns (address[] memory winners, uint256[] memory prizes) 
     {
         Room storage room = rooms[roomId];
-
+        
         // Find highest scorer who finished
         address winner;
         uint256 highestScore = 0;
-
+        
         for (uint256 i = 0; i < room.players.length; i++) {
             address player = room.players[i];
             if (room.finished[player] && room.playerScores[player] > highestScore) {
@@ -317,7 +317,7 @@ contract MultiplayerSnakesGame {
                 winner = player;
             }
         }
-
+        
         if (winner != address(0)) {
             winners = new address[](1);
             prizes = new uint256[](1);
@@ -328,22 +328,22 @@ contract MultiplayerSnakesGame {
             prizes = new uint256[](0);
         }
     }
-
+    
     /**
      * @dev Proportional distribution (Top 3)
      */
     function _distributeProportional(uint256 roomId, uint256 pool) 
         private 
         view 
-        returns (address[] memory winners, uint256[] memory prizes)
+        returns (address[] memory winners, uint256[] memory prizes) 
     {
         Room storage room = rooms[roomId];
-
+        
         // Get all finished players sorted by score
         address[] memory finishedPlayers = new address[](room.players.length);
         uint256[] memory scores = new uint256[](room.players.length);
         uint256 finishedCount = 0;
-
+        
         for (uint256 i = 0; i < room.players.length; i++) {
             if (room.finished[room.players[i]]) {
                 finishedPlayers[finishedCount] = room.players[i];
@@ -351,7 +351,7 @@ contract MultiplayerSnakesGame {
                 finishedCount++;
             }
         }
-
+        
         // Sort by score (bubble sort for simplicity)
         for (uint256 i = 0; i < finishedCount; i++) {
             for (uint256 j = i + 1; j < finishedCount; j++) {
@@ -361,23 +361,23 @@ contract MultiplayerSnakesGame {
                 }
             }
         }
-
+        
         // Distribute to top 3
         uint256 count = finishedCount > 3 ? 3 : finishedCount;
         winners = new address[](count);
         prizes = new uint256[](count);
-
+        
         uint256[] memory percentages = new uint256[](3);
         percentages[0] = 60; // 1st: 60%
         percentages[1] = 25; // 2nd: 25%
         percentages[2] = 10; // 3rd: 10%
-
+        
         for (uint256 i = 0; i < count; i++) {
             winners[i] = finishedPlayers[i];
             prizes[i] = (pool * percentages[i]) / 100;
         }
     }
-
+    
     /**
      * @dev Survival bonus distribution
      */
@@ -387,7 +387,7 @@ contract MultiplayerSnakesGame {
         returns (address[] memory winners, uint256[] memory prizes) 
     {
         Room storage room = rooms[roomId];
-
+        
         // Count survivors (finished without elimination)
         uint256 survivorCount = 0;
         for (uint256 i = 0; i < room.players.length; i++) {
@@ -395,11 +395,11 @@ contract MultiplayerSnakesGame {
                 survivorCount++;
             }
         }
-
+        
         if (survivorCount == 0) {
             return (new address[](0), new uint256[](0));
         }
-
+        
         // Equal split among survivors
         winners = new address[](survivorCount);
         prizes = new uint256[](survivorCount);
@@ -414,28 +414,28 @@ contract MultiplayerSnakesGame {
             }
         }
     }
-
+    
     /**
      * @dev Cancel room and refund all players
      */
     function _cancelRoom(uint256 roomId) private {
         Room storage room = rooms[roomId];
-
-    // Refund all players
+        
+        // Refund all players
         for (uint256 i = 0; i < room.players.length; i++) {
             address player = room.players[i];
             if (room.joined[player]) {
                 payable(player).transfer(room.betAmount);
             }
         }
-
+        
         room.status = RoomStatus.Cancelled;
         room.prizePool = 0;
-
+        
         _removeFromActiveRooms(roomId);
         emit RoomCancelled(roomId);
     }
-
+    
     /**
      * @dev Remove room from active rooms list
      */
@@ -448,7 +448,7 @@ contract MultiplayerSnakesGame {
             }
         }
     }
-
+    
     /**
      * @dev Get room info
      */
@@ -466,7 +466,7 @@ contract MultiplayerSnakesGame {
             prizePool: room.prizePool
         });
     }
-
+    
     /**
      * @dev Get all active rooms
      */
@@ -488,21 +488,21 @@ contract MultiplayerSnakesGame {
         }
         return infos;
     }
-
+    
     /**
      * @dev Get players in a room
      */
     function getRoomPlayers(uint256 roomId) external view roomExists(roomId) returns (address[] memory) {
         return rooms[roomId].players;
     }
-
+    
     /**
      * @dev Get player stats
      */
     function getPlayerStats(address player) external view returns (PlayerStats memory) {
         return playerStats[player];
     }
-
+    
     /**
      * @dev Set nickname
      */
@@ -511,14 +511,14 @@ contract MultiplayerSnakesGame {
         nicknames[msg.sender] = nickname;
         playerStats[msg.sender].nickname = nickname;
     }
-
+    
     /**
      * @dev Get contract balance
      */
     function getContractBalance() external view returns (uint256) {
         return address(this).balance;
     }
-
+    
     /**
      * @dev Withdraw accumulated house fees (owner only)
      */
@@ -526,3 +526,12 @@ contract MultiplayerSnakesGame {
         require(amount > 0 && amount <= address(this).balance, "Invalid amount");
         payable(owner).transfer(amount);
     }
+    
+    /**
+     * @dev Transfer ownership
+     */
+    function transferOwnership(address newOwner) external onlyOwner {
+        require(newOwner != address(0), "Invalid address");
+        owner = newOwner;
+    }
+}
