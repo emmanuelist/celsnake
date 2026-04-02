@@ -502,3 +502,12 @@ contract MultiplayerSnakesGame {
     function getPlayerStats(address player) external view returns (PlayerStats memory) {
         return playerStats[player];
     }
+
+    /**
+     * @dev Set nickname
+     */
+    function setNickname(string calldata nickname) external {
+        require(bytes(nickname).length > 0 && bytes(nickname).length <= 20, "Invalid nickname");
+        nicknames[msg.sender] = nickname;
+        playerStats[msg.sender].nickname = nickname;
+    }
