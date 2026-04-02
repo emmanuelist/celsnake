@@ -68,3 +68,4 @@ pragma solidity ^0.8.20;
     event PlayerLeft(uint256 indexed roomId, address indexed player);
     event GameStarted(uint256 indexed roomId, string boardSeed);
     event PlayerEliminated(uint256 indexed roomId, address indexed player);
+    event PlayerFinished(uint256 indexed roomId, address indexed player, uint256 score);
