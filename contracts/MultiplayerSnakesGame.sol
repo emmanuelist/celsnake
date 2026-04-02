@@ -54,3 +54,6 @@ pragma solidity ^0.8.20;
         uint256 totalEarnings;
         string nickname;
     }
+
+    // State variables
+    uint256 public nextRoomId = 1;
