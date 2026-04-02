@@ -414,3 +414,9 @@ contract MultiplayerSnakesGame {
             }
         }
     }
+
+    /**
+     * @dev Cancel room and refund all players
+     */
+    function _cancelRoom(uint256 roomId) private {
+        Room storage room = rooms[roomId];
