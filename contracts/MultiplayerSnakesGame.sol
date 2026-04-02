@@ -47,3 +47,10 @@ pragma solidity ^0.8.20;
         RoomStatus status;
         uint256 prizePool;
     }
+
+    struct PlayerStats {
+        uint256 totalGames;
+        uint256 wins;
+        uint256 totalEarnings;
+        string nickname;
+    }
