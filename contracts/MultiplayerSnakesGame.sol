@@ -289,3 +289,6 @@ contract MultiplayerSnakesGame {
 
         // Transfer house fee to owner
         payable(owner).transfer(houseFee);
+
+        // Remove from active rooms
+        _removeFromActiveRooms(roomId);
