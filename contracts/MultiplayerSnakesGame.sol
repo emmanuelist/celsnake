@@ -59,3 +59,4 @@ pragma solidity ^0.8.20;
     uint256 public nextRoomId = 1;
     mapping(uint256 => Room) private rooms;
     uint256[] public activeRoomIds;
+    mapping(address => PlayerStats) public playerStats;
