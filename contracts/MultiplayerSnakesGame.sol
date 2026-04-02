@@ -404,3 +404,13 @@ contract MultiplayerSnakesGame {
         winners = new address[](survivorCount);
         prizes = new uint256[](survivorCount);
         uint256 prizePerSurvivor = pool / survivorCount;
+        
+        uint256 idx = 0;
+        for (uint256 i = 0; i < room.players.length; i++) {
+            if (room.finished[room.players[i]]) {
+                winners[idx] = room.players[i];
+                prizes[idx] = prizePerSurvivor;
+                idx++;
+            }
+        }
+    }
