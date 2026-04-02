@@ -28,3 +28,4 @@ pragma solidity ^0.8.20;
         address[] players;
         mapping(address => bool) joined;
         mapping(address => uint256) playerScores;
+        mapping(address => bool) eliminated;
