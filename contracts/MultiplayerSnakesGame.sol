@@ -129,3 +129,7 @@ contract MultiplayerSnakesGame {
         require(!room.joined[msg.sender], "Already joined");
         require(room.players.length < room.maxPlayers, "Room full");
         require(msg.value == room.betAmount, "Incorrect bet amount");
+
+        room.players.push(msg.sender);
+        room.joined[msg.sender] = true;
+        room.prizePool += msg.value;
