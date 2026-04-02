@@ -80,3 +80,7 @@ contract MultiplayerSnakesGame {
         require(roomId > 0 && roomId < nextRoomId, "Room does not exist");
         _;
     }
+
+    constructor() {
+        owner = msg.sender;
+    }
