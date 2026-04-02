@@ -435,3 +435,16 @@ contract MultiplayerSnakesGame {
         _removeFromActiveRooms(roomId);
         emit RoomCancelled(roomId);
     }
+
+    /**
+     * @dev Remove room from active rooms list
+     */
+    function _removeFromActiveRooms(uint256 roomId) private {
+        for (uint256 i = 0; i < activeRoomIds.length; i++) {
+            if (activeRoomIds[i] == roomId) {
+                activeRoomIds[i] = activeRoomIds[activeRoomIds.length - 1];
+                activeRoomIds.pop();
+                break;
+            }
+        }
+    }
