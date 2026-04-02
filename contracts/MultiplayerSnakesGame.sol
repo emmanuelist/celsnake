@@ -172,3 +172,11 @@ contract MultiplayerSnakesGame {
             _cancelRoom(roomId);
         }
     }
+
+    /**
+     * @dev Start the game (internal, called when room is full)
+     */
+    function _startGame(uint256 roomId) private {
+        Room storage room = rooms[roomId];
+        room.status = RoomStatus.Playing;
+        room.startedAt = block.timestamp;
