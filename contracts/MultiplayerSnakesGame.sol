@@ -395,3 +395,7 @@ contract MultiplayerSnakesGame {
                 survivorCount++;
             }
         }
+
+        if (survivorCount == 0) {
+            return (new address[](0), new uint256[](0));
+        }
