@@ -109,3 +109,7 @@ contract MultiplayerSnakesGame {
         room.status = RoomStatus.Waiting;
         room.createdAt = block.timestamp;
         room.prizePool = msg.value;
+
+        // Add host as first player
+        room.players.push(msg.sender);
+        room.joined[msg.sender] = true;
