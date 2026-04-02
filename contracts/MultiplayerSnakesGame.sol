@@ -135,3 +135,9 @@ contract MultiplayerSnakesGame {
         room.prizePool += msg.value;
 
         emit PlayerJoined(roomId, msg.sender);
+
+        // Auto-start if room is full
+        if (room.players.length == room.maxPlayers) {
+            _startGame(roomId);
+        }
+    }
