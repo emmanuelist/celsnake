@@ -57,3 +57,4 @@ pragma solidity ^0.8.20;
 
     // State variables
     uint256 public nextRoomId = 1;
+    mapping(uint256 => Room) private rooms;
