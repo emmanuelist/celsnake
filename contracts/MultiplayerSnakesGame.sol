@@ -33,3 +33,5 @@ pragma solidity ^0.8.20;
         uint256 prizePool;
         uint256 createdAt;
         uint256 startedAt;
+        string boardSeed; // For deterministic board generation
+    }
