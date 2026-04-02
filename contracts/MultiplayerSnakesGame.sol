@@ -18,3 +18,4 @@ pragma solidity ^0.8.20;
     enum Difficulty { Easy, Medium, Hard, Expert, Master }
 
     struct Room {
+        uint256 id;
