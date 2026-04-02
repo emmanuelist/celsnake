@@ -317,3 +317,14 @@ contract MultiplayerSnakesGame {
                 winner = player;
             }
         }
+
+        if (winner != address(0)) {
+            winners = new address[](1);
+            prizes = new uint256[](1);
+            winners[0] = winner;
+            prizes[0] = pool;
+        } else {
+            winners = new address[](0);
+            prizes = new uint256[](0);
+        }
+    }
