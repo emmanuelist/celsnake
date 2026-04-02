@@ -12,3 +12,7 @@ pragma solidity ^0.8.20;
     uint256 public constant HOUSE_FEE_PERCENT = 5; // 5% house fee
     uint256 public constant MAX_PLAYERS_PER_ROOM = 4;
     uint256 public constant TURN_TIMEOUT = 60 seconds;
+
+    enum RoomStatus { Waiting, Playing, Finished, Cancelled }
+    enum PrizeModel { WinnerTakesAll, Proportional, Survival }
+    enum Difficulty { Easy, Medium, Hard, Expert, Master }
