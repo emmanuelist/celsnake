@@ -6,17 +6,16 @@ pragma solidity ^0.8.20;
  * @dev Multiplayer extension for Celo Snake game with turn-based mechanics
  * @notice Supports room-based gameplay with winner-takes-all or proportional distribution
  */
-
- contract MultiplayerSnakesGame {
+contract MultiplayerSnakesGame {
     address public owner;
     uint256 public constant HOUSE_FEE_PERCENT = 5; // 5% house fee
     uint256 public constant MAX_PLAYERS_PER_ROOM = 4;
     uint256 public constant TURN_TIMEOUT = 60 seconds;
-
+    
     enum RoomStatus { Waiting, Playing, Finished, Cancelled }
     enum PrizeModel { WinnerTakesAll, Proportional, Survival }
     enum Difficulty { Easy, Medium, Hard, Expert, Master }
-
+    
     struct Room {
         uint256 id;
         address host;
@@ -47,21 +46,21 @@ pragma solidity ^0.8.20;
         RoomStatus status;
         uint256 prizePool;
     }
-
+    
     struct PlayerStats {
         uint256 totalGames;
         uint256 wins;
         uint256 totalEarnings;
         string nickname;
     }
-
+    
     // State variables
     uint256 public nextRoomId = 1;
     mapping(uint256 => Room) private rooms;
     uint256[] public activeRoomIds;
     mapping(address => PlayerStats) public playerStats;
     mapping(address => string) public nicknames;
-
+    
     // Events
     event RoomCreated(uint256 indexed roomId, address indexed host, Difficulty difficulty, uint256 betAmount);
     event PlayerJoined(uint256 indexed roomId, address indexed player);
@@ -69,3 +68,5 @@ pragma solidity ^0.8.20;
     event GameStarted(uint256 indexed roomId, string boardSeed);
     event PlayerEliminated(uint256 indexed roomId, address indexed player);
     event PlayerFinished(uint256 indexed roomId, address indexed player, uint256 score);
+    event GameFinished(uint256 indexed roomId, address[] winners, uint256[] prizes);
+    
