@@ -19,3 +19,4 @@ pragma solidity ^0.8.20;
 
     struct Room {
         uint256 id;
+        address host;
