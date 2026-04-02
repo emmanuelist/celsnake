@@ -25,3 +25,4 @@ pragma solidity ^0.8.20;
         uint256 maxPlayers;
         PrizeModel prizeModel;
         RoomStatus status;
+        address[] players;
