@@ -26,3 +26,4 @@ pragma solidity ^0.8.20;
         PrizeModel prizeModel;
         RoomStatus status;
         address[] players;
+        mapping(address => bool) joined;
