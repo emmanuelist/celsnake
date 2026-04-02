@@ -277,3 +277,12 @@ contract MultiplayerSnakesGame {
         } else if (room.prizeModel == PrizeModel.Survival) {
             (winners, prizes) = _distributeSurvival(roomId, distributionPool);
         }
+
+        // Transfer prizes
+        for (uint256 i = 0; i < winners.length; i++) {
+            if (prizes[i] > 0) {
+                playerStats[winners[i]].wins++;
+                playerStats[winners[i]].totalEarnings += prizes[i];
+                payable(winners[i]).transfer(prizes[i]);
+            }
+        }
