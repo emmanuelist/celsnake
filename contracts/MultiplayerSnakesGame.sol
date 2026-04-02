@@ -466,3 +466,25 @@ contract MultiplayerSnakesGame {
             prizePool: room.prizePool
         });
     }
+
+    /**
+     * @dev Get all active rooms
+     */
+    function getActiveRooms() external view returns (RoomInfo[] memory) {
+        RoomInfo[] memory infos = new RoomInfo[](activeRoomIds.length);
+        for (uint256 i = 0; i < activeRoomIds.length; i++) {
+            Room storage room = rooms[activeRoomIds[i]];
+            infos[i] = RoomInfo({
+                id: room.id,
+                host: room.host,
+                difficulty: room.difficulty,
+                betAmount: room.betAmount,
+                maxPlayers: room.maxPlayers,
+                currentPlayers: room.players.length,
+                prizeModel: room.prizeModel,
+                status: room.status,
+                prizePool: room.prizePool
+            });
+        }
+        return infos;
+    }
