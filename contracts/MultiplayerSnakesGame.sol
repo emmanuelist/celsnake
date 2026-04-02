@@ -61,3 +61,7 @@ pragma solidity ^0.8.20;
     uint256[] public activeRoomIds;
     mapping(address => PlayerStats) public playerStats;
     mapping(address => string) public nicknames;
+
+    // Events
+    event RoomCreated(uint256 indexed roomId, address indexed host, Difficulty difficulty, uint256 betAmount);
+    
