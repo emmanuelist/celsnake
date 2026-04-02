@@ -229,3 +229,7 @@ contract MultiplayerSnakesGame {
         room.playerScores[msg.sender] = score;
 
         playerStats[msg.sender].totalGames++;
+
+        // Check if game should end
+        _checkGameEnd(roomId);
+    
