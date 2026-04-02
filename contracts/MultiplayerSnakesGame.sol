@@ -35,3 +35,15 @@ pragma solidity ^0.8.20;
         uint256 startedAt;
         string boardSeed; // For deterministic board generation
     }
+    
+    struct RoomInfo {
+        uint256 id;
+        address host;
+        Difficulty difficulty;
+        uint256 betAmount;
+        uint256 maxPlayers;
+        uint256 currentPlayers;
+        PrizeModel prizeModel;
+        RoomStatus status;
+        uint256 prizePool;
+    }
