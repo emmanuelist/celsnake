@@ -21,3 +21,4 @@ pragma solidity ^0.8.20;
         uint256 id;
         address host;
         Difficulty difficulty;
+        uint256 betAmount;
