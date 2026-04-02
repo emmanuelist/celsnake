@@ -295,3 +295,11 @@ contract MultiplayerSnakesGame {
         
         emit GameFinished(roomId, winners, prizes);
     }
+
+    /**
+     * @dev Winner-takes-all distribution
+     */
+    function _distributeWinnerTakesAll(uint256 roomId, uint256 pool) 
+        private 
+        view 
+        returns (address[] memory winners, uint256[] memory prizes)
