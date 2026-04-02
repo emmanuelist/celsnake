@@ -191,3 +191,6 @@ contract MultiplayerSnakesGame {
 
         // Remove from active rooms when game starts
         _removeFromActiveRooms(roomId);
+
+        emit GameStarted(roomId, room.boardSeed);
+    }
