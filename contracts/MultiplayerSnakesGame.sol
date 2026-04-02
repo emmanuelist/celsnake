@@ -303,3 +303,5 @@ contract MultiplayerSnakesGame {
         private 
         view 
         returns (address[] memory winners, uint256[] memory prizes)
+    {
+        Room storage room = rooms[roomId];
