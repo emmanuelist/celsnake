@@ -141,3 +141,11 @@ contract MultiplayerSnakesGame {
             _startGame(roomId);
         }
     }
+
+    /**
+     * @dev Leave a room before game starts
+     */
+    function leaveRoom(uint256 roomId) external roomExists(roomId) {
+        Room storage room = rooms[roomId];
+        require(room.status == RoomStatus.Waiting, "Cannot leave after game started");
+        require(room.joined[msg.sender], "Not in room");
