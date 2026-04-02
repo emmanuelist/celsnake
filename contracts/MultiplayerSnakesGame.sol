@@ -97,3 +97,15 @@ contract MultiplayerSnakesGame {
         require(_betAmount > 0, "Bet amount must be > 0");
         require(_maxPlayers >= 2 && _maxPlayers <= MAX_PLAYERS_PER_ROOM, "Invalid max players");
         require(msg.value == _betAmount, "Incorrect bet amount");
+
+        uint256 roomId = nextRoomId++;
+        Room storage room = rooms[roomId];
+        room.id = roomId;
+        room.host = msg.sender;
+        room.difficulty = _difficulty;
+        room.betAmount = _betAmount;
+        room.maxPlayers = _maxPlayers;
+        room.prizeModel = _prizeModel;
+        room.status = RoomStatus.Waiting;
+        room.createdAt = block.timestamp;
+        room.prizePool = msg.value;
