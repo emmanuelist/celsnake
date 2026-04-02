@@ -286,3 +286,6 @@ contract MultiplayerSnakesGame {
                 payable(winners[i]).transfer(prizes[i]);
             }
         }
+
+        // Transfer house fee to owner
+        payable(owner).transfer(houseFee);
