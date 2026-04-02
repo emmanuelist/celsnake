@@ -309,3 +309,11 @@ contract MultiplayerSnakesGame {
         // Find highest scorer who finished
         address winner;
         uint256 highestScore = 0;
+
+        for (uint256 i = 0; i < room.players.length; i++) {
+            address player = room.players[i];
+            if (room.finished[player] && room.playerScores[player] > highestScore) {
+                highestScore = room.playerScores[player];
+                winner = player;
+            }
+        }
