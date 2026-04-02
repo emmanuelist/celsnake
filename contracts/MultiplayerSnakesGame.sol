@@ -113,3 +113,9 @@ contract MultiplayerSnakesGame {
         // Add host as first player
         room.players.push(msg.sender);
         room.joined[msg.sender] = true;
+
+        activeRoomIds.push(roomId);
+        
+        emit RoomCreated(roomId, msg.sender, _difficulty, _betAmount);
+        return roomId;
+    }
