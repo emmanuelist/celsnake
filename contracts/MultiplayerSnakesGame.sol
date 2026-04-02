@@ -261,3 +261,5 @@ contract MultiplayerSnakesGame {
     function _distributePrizes(uint256 roomId) private {
         Room storage room = rooms[roomId];
         require(room.status == RoomStatus.Playing, "Game not playing");
+
+        room.status = RoomStatus.Finished;
