@@ -371,3 +371,9 @@ contract MultiplayerSnakesGame {
         percentages[0] = 60; // 1st: 60%
         percentages[1] = 25; // 2nd: 25%
         percentages[2] = 10; // 3rd: 10%
+
+        for (uint256 i = 0; i < count; i++) {
+            winners[i] = finishedPlayers[i];
+            prizes[i] = (pool * percentages[i]) / 100;
+        }
+    }
