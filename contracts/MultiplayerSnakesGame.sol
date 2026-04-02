@@ -16,3 +16,5 @@ pragma solidity ^0.8.20;
     enum RoomStatus { Waiting, Playing, Finished, Cancelled }
     enum PrizeModel { WinnerTakesAll, Proportional, Survival }
     enum Difficulty { Easy, Medium, Hard, Expert, Master }
+
+    struct Room {
