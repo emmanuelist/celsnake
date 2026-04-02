@@ -180,3 +180,11 @@ contract MultiplayerSnakesGame {
         Room storage room = rooms[roomId];
         room.status = RoomStatus.Playing;
         room.startedAt = block.timestamp;
+
+        // Generate deterministic board seed
+        room.boardSeed = string(abi.encodePacked(
+            block.timestamp,
+            block.prevrandao,
+            roomId,
+            room.players.length
+        ));
