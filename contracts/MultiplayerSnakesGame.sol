@@ -188,3 +188,6 @@ contract MultiplayerSnakesGame {
             roomId,
             room.players.length
         ));
+
+        // Remove from active rooms when game starts
+        _removeFromActiveRooms(roomId);
