@@ -81,3 +81,8 @@ contract MultiplayerSnakesGameV2 {
         require(msg.sender == owner, "Only owner");
         _;
     }
+
+    modifier roomExists(uint256 roomId) {
+        require(roomId > 0 && roomId < nextRoomId, "Room does not exist");
+        _;
+    }
