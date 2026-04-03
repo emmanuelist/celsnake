@@ -291,3 +291,10 @@ contract MultiplayerSnakesGameV2 {
             _distributePrizes(roomId);
         }
     }
+
+    /**
+     * @dev Distribute prizes with NFT holder benefits
+     */
+    function _distributePrizes(uint256 roomId) private {
+        Room storage room = rooms[roomId];
+        require(room.status == RoomStatus.Playing, "Game not playing");
