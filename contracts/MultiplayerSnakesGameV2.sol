@@ -485,3 +485,6 @@ contract MultiplayerSnakesGameV2 {
                 payable(player).transfer(room.betAmount);
             }
         }
+
+        room.status = RoomStatus.Cancelled;
+        room.prizePool = 0;
