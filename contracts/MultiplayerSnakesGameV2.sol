@@ -437,3 +437,12 @@ contract MultiplayerSnakesGameV2 {
             prizes[i] = (pool * percentages[i]) / 100;
         }
     }
+
+    /**
+     * @dev Survival bonus distribution
+     */
+    function _distributeSurvival(uint256 roomId, uint256 pool)
+        private
+        view
+        returns (address[] memory winners, uint256[] memory prizes)
+    {
