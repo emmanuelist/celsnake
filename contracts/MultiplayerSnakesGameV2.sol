@@ -330,3 +330,10 @@ contract MultiplayerSnakesGameV2 {
 
                 // Record win in achievement tracker
                 achievementTracker.recordWin(winners[i], room.betAmount, prizes[i], room.playerScores[winners[i]], true);
+
+                // Record tournament win if exclusive
+                if (room.exclusiveTournament && i == 0) {
+                    achievementTracker.recordTournamentWin(winners[i]);
+                }
+            }
+        }
