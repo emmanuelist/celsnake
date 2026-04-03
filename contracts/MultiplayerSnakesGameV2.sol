@@ -404,3 +404,11 @@ contract MultiplayerSnakesGameV2 {
         address[] memory finishedPlayers = new address[](room.players.length);
         uint256[] memory scores = new uint256[](room.players.length);
         uint256 finishedCount = 0;
+
+        for (uint256 i = 0; i < room.players.length; i++) {
+            if (room.finished[room.players[i]]) {
+                finishedPlayers[finishedCount] = room.players[i];
+                scores[finishedCount] = room.playerScores[room.players[i]];
+                finishedCount++;
+            }
+        }
