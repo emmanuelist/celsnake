@@ -208,3 +208,6 @@ contract MultiplayerSnakesGameV2 {
                 break;
             }
         }
+
+        payable(msg.sender).transfer(betAmount);
+        emit PlayerLeft(roomId, msg.sender);
