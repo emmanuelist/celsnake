@@ -104,3 +104,11 @@ contract MultiplayerSnakesGameV2 {
     ) external payable returns (uint256) {
         require(_betAmount > 0, "Bet amount must be > 0");
         require(_maxPlayers >= 2 && _maxPlayers <= MAX_PLAYERS_PER_ROOM, "Invalid max players");
+
+        // Check exclusive tournament eligibility
+        if (_exclusiveTournament) {
+            require(
+                achievementTracker.isEligibleForExclusiveTournaments(msg.sender),
+                "Gold+ achievement required for exclusive tournaments"
+            );
+        }
