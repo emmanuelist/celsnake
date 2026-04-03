@@ -577,3 +577,11 @@ contract MultiplayerSnakesGameV2 {
     function getContractBalance() external view returns (uint256) {
         return address(this).balance;
     }
+
+    /**
+     * @dev Withdraw accumulated house fees (owner only)
+     */
+    function withdraw(uint256 amount) external onlyOwner {
+        require(amount > 0 && amount <= address(this).balance, "Invalid amount");
+        payable(owner).transfer(amount);
+    }
