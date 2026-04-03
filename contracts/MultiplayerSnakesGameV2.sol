@@ -447,3 +447,10 @@ contract MultiplayerSnakesGameV2 {
         returns (address[] memory winners, uint256[] memory prizes)
     {
         Room storage room = rooms[roomId];
+
+        uint256 survivorCount = 0;
+        for (uint256 i = 0; i < room.players.length; i++) {
+            if (room.finished[room.players[i]]) {
+                survivorCount++;
+            }
+        }
