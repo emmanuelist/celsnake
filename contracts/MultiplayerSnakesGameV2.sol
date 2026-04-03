@@ -261,3 +261,6 @@ contract MultiplayerSnakesGameV2 {
         require(room.joined[msg.sender], "Not in room");
         require(!room.eliminated[msg.sender], "Already eliminated");
         require(!room.finished[msg.sender], "Already finished");
+
+        room.finished[msg.sender] = true;
+        room.playerScores[msg.sender] = score;
