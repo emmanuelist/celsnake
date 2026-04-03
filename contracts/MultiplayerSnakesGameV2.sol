@@ -211,3 +211,9 @@ contract MultiplayerSnakesGameV2 {
 
         payable(msg.sender).transfer(betAmount);
         emit PlayerLeft(roomId, msg.sender);
+
+        // Cancel room if host leaves
+        if (msg.sender == room.host && room.players.length > 0) {
+            _cancelRoom(roomId);
+        }
+    }
