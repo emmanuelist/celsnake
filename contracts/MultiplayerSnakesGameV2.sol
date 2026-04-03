@@ -66,3 +66,13 @@ contract MultiplayerSnakesGameV2 {
     uint256[] public activeRoomIds;
     mapping(address => PlayerStats) public playerStats;
     mapping(address => string) public nicknames;
+
+    // Events
+    event RoomCreated(uint256 indexed roomId, address indexed host, Difficulty difficulty, uint256 betAmount, bool exclusive);
+    event PlayerJoined(uint256 indexed roomId, address indexed player, uint256 discountApplied);
+    event PlayerLeft(uint256 indexed roomId, address indexed player);
+    event GameStarted(uint256 indexed roomId, string boardSeed);
+    event PlayerEliminated(uint256 indexed roomId, address indexed player);
+    event PlayerFinished(uint256 indexed roomId, address indexed player, uint256 score);
+    event GameFinished(uint256 indexed roomId, address[] winners, uint256[] prizes);
+    event RoomCancelled(uint256 indexed roomId);
