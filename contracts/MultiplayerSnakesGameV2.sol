@@ -300,3 +300,8 @@ contract MultiplayerSnakesGameV2 {
         require(room.status == RoomStatus.Playing, "Game not playing");
 
         room.status = RoomStatus.Finished;
+        // Calculate average effective house fee
+        uint256 totalFee = 0;
+        for (uint256 i = 0; i < room.players.length; i++) {
+            totalFee += room.effectiveFee[room.players[i]];
+        }
