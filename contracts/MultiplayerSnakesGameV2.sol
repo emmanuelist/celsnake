@@ -305,3 +305,4 @@ contract MultiplayerSnakesGameV2 {
         for (uint256 i = 0; i < room.players.length; i++) {
             totalFee += room.effectiveFee[room.players[i]];
         }
+        uint256 avgFee = totalFee / room.players.length;
