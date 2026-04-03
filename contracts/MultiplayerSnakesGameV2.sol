@@ -195,3 +195,7 @@ contract MultiplayerSnakesGameV2 {
         Room storage room = rooms[roomId];
         require(room.status == RoomStatus.Waiting, "Cannot leave after game started");
         require(room.joined[msg.sender], "Not in room");
+
+        uint256 betAmount = room.betAmount;
+        room.prizePool -= betAmount;
+        room.joined[msg.sender] = false;
