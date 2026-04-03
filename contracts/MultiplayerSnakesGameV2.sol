@@ -132,3 +132,7 @@ contract MultiplayerSnakesGameV2 {
         room.prizePool = msg.value;
         room.exclusiveTournament = _exclusiveTournament;
         room.effectiveFee[msg.sender] = effectiveFee;
+
+        // Add host as first player
+        room.players.push(msg.sender);
+        room.joined[msg.sender] = true;
