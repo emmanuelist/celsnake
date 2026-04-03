@@ -300,6 +300,7 @@ contract MultiplayerSnakesGameV2 {
         require(room.status == RoomStatus.Playing, "Game not playing");
 
         room.status = RoomStatus.Finished;
+
         // Calculate average effective house fee
         uint256 totalFee = 0;
         for (uint256 i = 0; i < room.players.length; i++) {
@@ -359,7 +360,7 @@ contract MultiplayerSnakesGameV2 {
         emit GameFinished(roomId, winners, prizes);
     }
 
-     /**
+    /**
      * @dev Winner-takes-all distribution
      */
     function _distributeWinnerTakesAll(uint256 roomId, uint256 pool)
@@ -601,3 +602,9 @@ contract MultiplayerSnakesGameV2 {
         require(_achievementTracker != address(0), "Invalid address");
         achievementTracker = AchievementTracker(_achievementTracker);
     }
+
+    /**
+     * @dev Fallback to receive ETH
+     */
+    receive() external payable {}
+}
