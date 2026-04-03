@@ -271,3 +271,9 @@ contract MultiplayerSnakesGameV2 {
 
         _checkGameEnd(roomId);
     }
+
+    /**
+     * @dev Check if game should end and distribute prizes
+     */
+    function _checkGameEnd(uint256 roomId) private {
+        Room storage room = rooms[roomId];
