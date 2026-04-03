@@ -309,3 +309,6 @@ contract MultiplayerSnakesGameV2 {
 
         uint256 houseFee = (room.prizePool * avgFee) / 100;
         uint256 distributionPool = room.prizePool - houseFee;
+
+        address[] memory winners;
+        uint256[] memory prizes;
