@@ -505,3 +505,22 @@ contract MultiplayerSnakesGameV2 {
             }
         }
     }
+
+    /**
+     * @dev Get room info
+     */
+    function getRoomInfo(uint256 roomId) external view roomExists(roomId) returns (RoomInfo memory) {
+        Room storage room = rooms[roomId];
+        return RoomInfo({
+            id: room.id,
+            host: room.host,
+            difficulty: room.difficulty,
+            betAmount: room.betAmount,
+            maxPlayers: room.maxPlayers,
+            currentPlayers: room.players.length,
+            prizeModel: room.prizeModel,
+            status: room.status,
+            prizePool: room.prizePool,
+            exclusiveTournament: room.exclusiveTournament
+        });
+    }
