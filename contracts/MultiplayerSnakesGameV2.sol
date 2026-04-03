@@ -312,3 +312,11 @@ contract MultiplayerSnakesGameV2 {
 
         address[] memory winners;
         uint256[] memory prizes;
+
+        if (room.prizeModel == PrizeModel.WinnerTakesAll) {
+            (winners, prizes) = _distributeWinnerTakesAll(roomId, distributionPool);
+        } else if (room.prizeModel == PrizeModel.Proportional) {
+            (winners, prizes) = _distributeProportional(roomId, distributionPool);
+        } else if (room.prizeModel == PrizeModel.Survival) {
+            (winners, prizes) = _distributeSurvival(roomId, distributionPool);
+        }
