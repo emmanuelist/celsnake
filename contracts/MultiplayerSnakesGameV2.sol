@@ -236,3 +236,12 @@ contract MultiplayerSnakesGameV2 {
         _removeFromActiveRooms(roomId);
         emit GameStarted(roomId, room.boardSeed);
     }
+
+    /**
+     * @dev Mark player as eliminated
+     */
+    function eliminatePlayer(uint256 roomId, address player) external roomExists(roomId) {
+        Room storage room = rooms[roomId];
+        require(room.status == RoomStatus.Playing, "Game not in progress");
+        require(room.joined[player], "Player not in room");
+        require(!room.eliminated[player], "Already eliminated");
