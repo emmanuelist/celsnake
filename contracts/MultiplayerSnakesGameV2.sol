@@ -170,3 +170,7 @@ contract MultiplayerSnakesGameV2 {
         uint256 discount = achievementTracker.getPlayerDiscount(msg.sender);
         uint256 effectiveFee = BASE_HOUSE_FEE_PERCENT > discount ? BASE_HOUSE_FEE_PERCENT - discount : 0;
         room.effectiveFee[msg.sender] = effectiveFee;
+
+        room.players.push(msg.sender);
+        room.joined[msg.sender] = true;
+        room.prizePool += msg.value;
