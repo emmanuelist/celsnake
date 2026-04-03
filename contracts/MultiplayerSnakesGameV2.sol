@@ -199,3 +199,12 @@ contract MultiplayerSnakesGameV2 {
         uint256 betAmount = room.betAmount;
         room.prizePool -= betAmount;
         room.joined[msg.sender] = false;
+
+        // Remove from players array
+        for (uint256 i = 0; i < room.players.length; i++) {
+            if (room.players[i] == msg.sender) {
+                room.players[i] = room.players[room.players.length - 1];
+                room.players.pop();
+                break;
+            }
+        }
