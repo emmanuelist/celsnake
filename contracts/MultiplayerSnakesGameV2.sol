@@ -232,3 +232,7 @@ contract MultiplayerSnakesGameV2 {
             roomId,
             room.players.length
         ));
+
+        _removeFromActiveRooms(roomId);
+        emit GameStarted(roomId, room.boardSeed);
+    }
