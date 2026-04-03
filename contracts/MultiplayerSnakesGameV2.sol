@@ -245,3 +245,9 @@ contract MultiplayerSnakesGameV2 {
         require(room.status == RoomStatus.Playing, "Game not in progress");
         require(room.joined[player], "Player not in room");
         require(!room.eliminated[player], "Already eliminated");
+
+        room.eliminated[player] = true;
+        emit PlayerEliminated(roomId, player);
+
+        _checkGameEnd(roomId);
+    }
