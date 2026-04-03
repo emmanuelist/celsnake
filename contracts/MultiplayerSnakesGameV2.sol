@@ -488,3 +488,7 @@ contract MultiplayerSnakesGameV2 {
 
         room.status = RoomStatus.Cancelled;
         room.prizePool = 0;
+
+        _removeFromActiveRooms(roomId);
+        emit RoomCancelled(roomId);
+    }
