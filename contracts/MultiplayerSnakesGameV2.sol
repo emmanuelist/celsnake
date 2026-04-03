@@ -277,3 +277,12 @@ contract MultiplayerSnakesGameV2 {
      */
     function _checkGameEnd(uint256 roomId) private {
         Room storage room = rooms[roomId];
+
+        bool allDone = true;
+        for (uint256 i = 0; i < room.players.length; i++) {
+            address player = room.players[i];
+            if (!room.finished[player] && !room.eliminated[player]) {
+                allDone = false;
+                break;
+            }
+        }
