@@ -116,3 +116,5 @@ contract MultiplayerSnakesGameV2 {
         // Calculate effective bet with discount
         uint256 discount = achievementTracker.getPlayerDiscount(msg.sender);
         uint256 effectiveFee = BASE_HOUSE_FEE_PERCENT > discount ? BASE_HOUSE_FEE_PERCENT - discount : 0;
+
+        require(msg.value == _betAmount, "Incorrect bet amount");
