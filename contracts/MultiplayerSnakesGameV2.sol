@@ -337,3 +337,18 @@ contract MultiplayerSnakesGameV2 {
                 }
             }
         }
+
+        // Record losses for non-winners
+        for (uint256 i = 0; i < room.players.length; i++) {
+            address player = room.players[i];
+            bool isWinner = false;
+            for (uint256 j = 0; j < winners.length; j++) {
+                if (winners[j] == player) {
+                    isWinner = true;
+                    break;
+                }
+            }
+            if (!isWinner && room.finished[player]) {
+                achievementTracker.recordLoss(player, room.betAmount);
+            }
+        }
