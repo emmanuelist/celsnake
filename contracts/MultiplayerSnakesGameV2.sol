@@ -593,3 +593,11 @@ contract MultiplayerSnakesGameV2 {
         require(newOwner != address(0), "Invalid address");
         owner = newOwner;
     }
+
+    /**
+     * @dev Update achievement tracker address (owner only)
+     */
+    function setAchievementTracker(address _achievementTracker) external onlyOwner {
+        require(_achievementTracker != address(0), "Invalid address");
+        achievementTracker = AchievementTracker(_achievementTracker);
+    }
