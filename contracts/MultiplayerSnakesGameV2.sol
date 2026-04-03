@@ -14,3 +14,7 @@ contract MultiplayerSnakesGameV2 {
     uint256 public constant BASE_HOUSE_FEE_PERCENT = 5; // 5% base house fee
     uint256 public constant MAX_PLAYERS_PER_ROOM = 4;
     uint256 public constant TURN_TIMEOUT = 60 seconds;
+
+    enum RoomStatus { Waiting, Playing, Finished, Cancelled }
+    enum PrizeModel { WinnerTakesAll, Proportional, Survival }
+    enum Difficulty { Easy, Medium, Hard, Expert, Master }
