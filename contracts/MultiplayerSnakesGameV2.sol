@@ -138,3 +138,8 @@ contract MultiplayerSnakesGameV2 {
         room.joined[msg.sender] = true;
 
         activeRoomIds.push(roomId);
+
+        // Record tournament participation
+        if (_exclusiveTournament) {
+            achievementTracker.recordTournamentParticipation(msg.sender);
+        }
