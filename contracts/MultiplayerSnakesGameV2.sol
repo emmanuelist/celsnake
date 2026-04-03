@@ -458,3 +458,7 @@ contract MultiplayerSnakesGameV2 {
         if (survivorCount == 0) {
             return (new address[](0), new uint256[](0));
         }
+
+        winners = new address[](survivorCount);
+        prizes = new uint256[](survivorCount);
+        uint256 prizePerSurvivor = pool / survivorCount;
