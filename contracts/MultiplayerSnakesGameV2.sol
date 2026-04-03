@@ -554,3 +554,10 @@ contract MultiplayerSnakesGameV2 {
     function getRoomPlayers(uint256 roomId) external view roomExists(roomId) returns (address[] memory) {
         return rooms[roomId].players;
     }
+
+    /**
+     * @dev Get player stats
+     */
+    function getPlayerStats(address player) external view returns (PlayerStats memory) {
+        return playerStats[player];
+    }
