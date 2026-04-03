@@ -39,3 +39,16 @@ contract MultiplayerSnakesGameV2 {
         string boardSeed;
         bool exclusiveTournament; // Gold+ holders only
     }
+
+    struct RoomInfo {
+        uint256 id;
+        address host;
+        Difficulty difficulty;
+        uint256 betAmount;
+        uint256 maxPlayers;
+        uint256 currentPlayers;
+        PrizeModel prizeModel;
+        RoomStatus status;
+        uint256 prizePool;
+        bool exclusiveTournament;
+    }
