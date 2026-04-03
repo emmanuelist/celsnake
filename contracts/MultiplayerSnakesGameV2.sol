@@ -352,3 +352,9 @@ contract MultiplayerSnakesGameV2 {
                 achievementTracker.recordLoss(player, room.betAmount);
             }
         }
+
+        payable(owner).transfer(houseFee);
+        _removeFromActiveRooms(roomId);
+
+        emit GameFinished(roomId, winners, prizes);
+    }
