@@ -52,3 +52,10 @@ contract MultiplayerSnakesGameV2 {
         uint256 prizePool;
         bool exclusiveTournament;
     }
+
+    struct PlayerStats {
+        uint256 totalGames;
+        uint256 wins;
+        uint256 totalEarnings;
+        string nickname;
+    }
