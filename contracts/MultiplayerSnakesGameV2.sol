@@ -286,3 +286,8 @@ contract MultiplayerSnakesGameV2 {
                 break;
             }
         }
+
+        if (allDone) {
+            _distributePrizes(roomId);
+        }
+    }
