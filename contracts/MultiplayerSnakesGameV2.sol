@@ -76,3 +76,8 @@ contract MultiplayerSnakesGameV2 {
     event PlayerFinished(uint256 indexed roomId, address indexed player, uint256 score);
     event GameFinished(uint256 indexed roomId, address[] winners, uint256[] prizes);
     event RoomCancelled(uint256 indexed roomId);
+
+    modifier onlyOwner() {
+        require(msg.sender == owner, "Only owner");
+        _;
+    }
