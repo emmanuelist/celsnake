@@ -327,3 +327,6 @@ contract MultiplayerSnakesGameV2 {
                 playerStats[winners[i]].wins++;
                 playerStats[winners[i]].totalEarnings += prizes[i];
                 payable(winners[i]).transfer(prizes[i]);
+
+                // Record win in achievement tracker
+                achievementTracker.recordWin(winners[i], room.betAmount, prizes[i], room.playerScores[winners[i]], true);
