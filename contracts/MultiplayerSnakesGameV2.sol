@@ -91,3 +91,16 @@ contract MultiplayerSnakesGameV2 {
         owner = msg.sender;
         achievementTracker = AchievementTracker(_achievementTracker);
     }
+
+    /**
+     * @dev Create a new multiplayer room
+     */
+    function createRoom(
+        Difficulty _difficulty,
+        uint256 _betAmount,
+        uint256 _maxPlayers,
+        PrizeModel _prizeModel,
+        bool _exclusiveTournament
+    ) external payable returns (uint256) {
+        require(_betAmount > 0, "Bet amount must be > 0");
+        require(_maxPlayers >= 2 && _maxPlayers <= MAX_PLAYERS_PER_ROOM, "Invalid max players");
