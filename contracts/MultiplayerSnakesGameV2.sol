@@ -217,3 +217,11 @@ contract MultiplayerSnakesGameV2 {
             _cancelRoom(roomId);
         }
     }
+
+    /**
+     * @dev Start the game
+     */
+    function _startGame(uint256 roomId) private {
+        Room storage room = rooms[roomId];
+        room.status = RoomStatus.Playing;
+        room.startedAt = block.timestamp;
