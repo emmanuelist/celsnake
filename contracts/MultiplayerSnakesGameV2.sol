@@ -18,3 +18,24 @@ contract MultiplayerSnakesGameV2 {
     enum RoomStatus { Waiting, Playing, Finished, Cancelled }
     enum PrizeModel { WinnerTakesAll, Proportional, Survival }
     enum Difficulty { Easy, Medium, Hard, Expert, Master }
+
+    struct Room {
+        uint256 id;
+        address host;
+        Difficulty difficulty;
+        uint256 betAmount;
+        uint256 maxPlayers;
+        PrizeModel prizeModel;
+        RoomStatus status;
+        address[] players;
+        mapping(address => bool) joined;
+        mapping(address => uint256) playerScores;
+        mapping(address => bool) eliminated;
+        mapping(address => bool) finished;
+        mapping(address => uint256) effectiveFee; // NFT discount applied
+        uint256 prizePool;
+        uint256 createdAt;
+        uint256 startedAt;
+        string boardSeed;
+        bool exclusiveTournament; // Gold+ holders only
+    }
