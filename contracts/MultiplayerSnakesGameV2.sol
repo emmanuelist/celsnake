@@ -147,3 +147,13 @@ contract MultiplayerSnakesGameV2 {
         emit RoomCreated(roomId, msg.sender, _difficulty, _betAmount, _exclusiveTournament);
         return roomId;
     }
+
+    /**
+     * @dev Join an existing room (with NFT holder benefits)
+     */
+    function joinRoom(uint256 roomId) external payable roomExists(roomId) {
+        Room storage room = rooms[roomId];
+        require(room.status == RoomStatus.Waiting, "Room not accepting players");
+        require(!room.joined[msg.sender], "Already joined");
+        require(room.players.length < room.maxPlayers, "Room full");
+        require(msg.value == room.betAmount, "Incorrect bet amount");
