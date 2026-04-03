@@ -86,3 +86,8 @@ contract MultiplayerSnakesGameV2 {
         require(roomId > 0 && roomId < nextRoomId, "Room does not exist");
         _;
     }
+
+    constructor(address _achievementTracker) {
+        owner = msg.sender;
+        achievementTracker = AchievementTracker(_achievementTracker);
+    }
