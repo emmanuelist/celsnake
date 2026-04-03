@@ -266,3 +266,5 @@ contract MultiplayerSnakesGameV2 {
         room.playerScores[msg.sender] = score;
 
         playerStats[msg.sender].totalGames++;
+
+        emit PlayerFinished(roomId, msg.sender, score);
