@@ -400,3 +400,7 @@ contract MultiplayerSnakesGameV2 {
         returns (address[] memory winners, uint256[] memory prizes)
     {
         Room storage room = rooms[roomId];
+
+        address[] memory finishedPlayers = new address[](room.players.length);
+        uint256[] memory scores = new uint256[](room.players.length);
+        uint256 finishedCount = 0;
