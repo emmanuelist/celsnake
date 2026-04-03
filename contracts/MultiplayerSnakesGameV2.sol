@@ -118,3 +118,17 @@ contract MultiplayerSnakesGameV2 {
         uint256 effectiveFee = BASE_HOUSE_FEE_PERCENT > discount ? BASE_HOUSE_FEE_PERCENT - discount : 0;
 
         require(msg.value == _betAmount, "Incorrect bet amount");
+
+        uint256 roomId = nextRoomId++;
+        Room storage room = rooms[roomId];
+        room.id = roomId;
+        room.host = msg.sender;
+        room.difficulty = _difficulty;
+        room.betAmount = _betAmount;
+        room.maxPlayers = _maxPlayers;
+        room.prizeModel = _prizeModel;
+        room.status = RoomStatus.Waiting;
+        room.createdAt = block.timestamp;
+        room.prizePool = msg.value;
+        room.exclusiveTournament = _exclusiveTournament;
+        room.effectiveFee[msg.sender] = effectiveFee;
