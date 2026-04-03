@@ -225,3 +225,10 @@ contract MultiplayerSnakesGameV2 {
         Room storage room = rooms[roomId];
         room.status = RoomStatus.Playing;
         room.startedAt = block.timestamp;
+
+        room.boardSeed = string(abi.encodePacked(
+            block.timestamp,
+            block.prevrandao,
+            roomId,
+            room.players.length
+        ));
