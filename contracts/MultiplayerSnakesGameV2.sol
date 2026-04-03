@@ -306,3 +306,6 @@ contract MultiplayerSnakesGameV2 {
             totalFee += room.effectiveFee[room.players[i]];
         }
         uint256 avgFee = totalFee / room.players.length;
+
+        uint256 houseFee = (room.prizePool * avgFee) / 100;
+        uint256 distributionPool = room.prizePool - houseFee;
