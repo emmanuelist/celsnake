@@ -412,3 +412,13 @@ contract MultiplayerSnakesGameV2 {
                 finishedCount++;
             }
         }
+
+        // Sort by score
+        for (uint256 i = 0; i < finishedCount; i++) {
+            for (uint256 j = i + 1; j < finishedCount; j++) {
+                if (scores[j] > scores[i]) {
+                    (scores[i], scores[j]) = (scores[j], scores[i]);
+                    (finishedPlayers[i], finishedPlayers[j]) = (finishedPlayers[j], finishedPlayers[i]);
+                }
+            }
+        }
