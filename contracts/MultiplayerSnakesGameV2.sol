@@ -181,3 +181,9 @@ contract MultiplayerSnakesGameV2 {
         }
 
         emit PlayerJoined(roomId, msg.sender, discount);
+
+        // Auto-start if room is full
+        if (room.players.length == room.maxPlayers) {
+            _startGame(roomId);
+        }
+    }
