@@ -585,3 +585,11 @@ contract MultiplayerSnakesGameV2 {
         require(amount > 0 && amount <= address(this).balance, "Invalid amount");
         payable(owner).transfer(amount);
     }
+
+    /**
+     * @dev Transfer ownership
+     */
+    function transferOwnership(address newOwner) external onlyOwner {
+        require(newOwner != address(0), "Invalid address");
+        owner = newOwner;
+    }
