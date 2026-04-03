@@ -165,3 +165,8 @@ contract MultiplayerSnakesGameV2 {
                 "Gold+ achievement required for exclusive tournaments"
             );
         }
+
+        // Calculate effective fee with discount
+        uint256 discount = achievementTracker.getPlayerDiscount(msg.sender);
+        uint256 effectiveFee = BASE_HOUSE_FEE_PERCENT > discount ? BASE_HOUSE_FEE_PERCENT - discount : 0;
+        room.effectiveFee[msg.sender] = effectiveFee;
