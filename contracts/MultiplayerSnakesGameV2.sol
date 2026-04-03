@@ -157,3 +157,11 @@ contract MultiplayerSnakesGameV2 {
         require(!room.joined[msg.sender], "Already joined");
         require(room.players.length < room.maxPlayers, "Room full");
         require(msg.value == room.betAmount, "Incorrect bet amount");
+
+        // Check exclusive tournament eligibility
+        if (room.exclusiveTournament) {
+            require(
+                achievementTracker.isEligibleForExclusiveTournaments(msg.sender),
+                "Gold+ achievement required for exclusive tournaments"
+            );
+        }
